@@ -1,7 +1,7 @@
 library(dplyr)
 library(ggplot2)
 #new parameter
-p_2 <- MLE_trial_p$parameters
+p_2 <- estimated_p$maximum
 q_2 <- MLE_trial_q$parameters
 delay_parm_2 <- matrix(0,24,1) 
 for (each in 1:24) {

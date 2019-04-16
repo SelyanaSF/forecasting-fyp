@@ -1,16 +1,24 @@
 library(EnvStats)
-## Generate the return data of Geometric Distribution Trial
+## Generate the return data of Geometric Distribution Trial for p
 set.seed(200)
-prob_p <- round(prob_p,2)
-my_data <- rgeom(sales_data$estimated_sales,prob_p)
-# Search for estimated p 
-MLE_trial_p <- egeom(my_data,method = "mle")
+my_data <- rgeom(sales_data$estimated_sales,0.5)
+condprob_p <- egeom(my_data,method = "mle")
+# Search for estimated q
+set.seed(200)
+my_data_2 <- rgeom(sales_data$estimated_sales,condprob_p$parameters)
+MLE_trial_q <- egeom(my_data_2,method = "mle")
 
-## Generate the return data using the prob p 
-set.seed(200)
-prob_2 <- MLE_trial_p$parameters
-my_data_2 <- rgeom(sales_data$estimated_sales,prob_2)
-## Search for conditional probability of p (which is q)
-MLE_trial_q <- egeom(my_data_2, method="mle")
+
+
+## Do the Bernoulli Trial 
+B <- replicate(299, {
+  s <- sample(c(0,1), size=10, replace=TRUE)
+})
+n <-1 
+# formulation for the log likelihood for the binomial 
+logL <- function(p) sum(log(dbinom(B, n, p)))
+
+# search for estimated p (optimum):
+estimated_p <- optimize(logL, lower=0, upper=1, maximum=TRUE)
 
 
