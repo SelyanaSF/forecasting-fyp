@@ -1,7 +1,7 @@
 library(dplyr)
 library(ggplot2)
 #new parameter
-p_2 <- estimated_p$maximum
+p_2 <- 0.5023597
 q_2 <- MLE_trial_q$parameters
 delay_parm_2 <- matrix(0,24,1) 
 for (each in 1:24) {
@@ -33,5 +33,5 @@ error_figure <- ggplot(sales_data_new, aes(Period)) +
 
 ## Mean of MAE and MAPE
 
-mean_MAE <- sum(sales_data_new$MAE)/t
-mean_MAPE <- sum(sales_data_new$MAPE, na.rm = TRUE)/t
+mean_MAE <- sum(sales_data_new$MAE)/(t-1)
+mean_MAPE <- sum(sales_data_new$MAPE, na.rm = TRUE)/(t-1)
